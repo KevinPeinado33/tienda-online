@@ -19,14 +19,16 @@ const App = () => {
   return (
     <Router>
       <Provider store={ store } >
-        <NavBar />
-        <Switch>
-          <Route path='/home' exact component={ HomePage } />
-          <Route path='/my-publications' exact component={ MyPublicationPage } />
-          <Route path='/sign-in' exact component={ LoginPage } />
-          
-          <Redirect from='/' to='/home' />
-        </Switch>
+        <div className='container'>
+          <NavBar />
+          <Switch>
+            <Route path='/home' exact component={ HomePage } />
+            <Route path='/my-publications' exact component={ MyPublicationPage } />
+            <Route path='/sign-in' exact component={ LoginPage } />
+            
+            <Redirect from='/' to='/home' />
+          </Switch>
+        </div>
       </Provider>
     </Router>
   )

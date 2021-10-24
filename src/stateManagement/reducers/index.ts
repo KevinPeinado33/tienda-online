@@ -1,3 +1,5 @@
 import { combineReducers } from 'redux';
 
-export default combineReducers({});
+import publications from './publicationReducer';
+
+export default combineReducers({ publications });

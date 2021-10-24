@@ -1,7 +1,11 @@
 import { Nav } from 'react-bootstrap';
 
+import { NavLink } from 'react-router-dom';
+
+import { RoutesName } from '../../../config/typeRoutes';
+
 interface Props {
-    path: string;
+    path: RoutesName;
     name: string;
     disabled?: boolean;
 }
@@ -10,7 +14,8 @@ export const NavItem = ( { path, name, disabled = false } : Props )  => {
     return (
         <Nav.Item>
             <Nav.Link 
-                href={ path }
+                as={NavLink}
+                to={path}
                 disabled={disabled}>
                     { name }
             </Nav.Link>
