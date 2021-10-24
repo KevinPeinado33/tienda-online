@@ -1,7 +1,8 @@
 import { PublicationAction } from '../types/publicationTypes';
+import { Publication } from '../../interfaces/publicationInterface';
 
 interface PublicationState {
-    publications: string[];
+    publications: Publication[];
     loading: boolean;
     error: string | null | any;
 }
@@ -42,14 +43,14 @@ const PublicationReducer = ( state: PublicationState = initialState, action: Pub
             return {
                 ...state,
                 loading: false,
-                publications: state.publications.map( item => item === action.payload ? item = action.payload : item )
+                publications: state.publications.map( item => item.id === action.payload.id ? item = action.payload : item )
             }
 
         case 'DELETE_PUBLICATION_SUCCESS':
             return {
                 ...state,
                 loading: false,
-                publications: state.publications.filter( item => item !== action.payload )
+                publications: state.publications.filter( item => item.id !== action.payload )
             }
         
         case 'EDIT_PUBLICATION_ERROR':

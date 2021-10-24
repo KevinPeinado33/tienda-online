@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import { Publication } from '../interfaces/publicationInterface';
 
 import { 
     downloadPublications,
@@ -28,7 +29,7 @@ export const downloadPublicationsAction = () => {
 
         try {
 
-            dispatch( downloadPublicationsSuccess(['prueba 1', 'prueba 2']) );
+            dispatch( downloadPublicationsSuccess( [] ) );
 
         } catch ( error ) {
 
@@ -45,7 +46,7 @@ export const downloadPublicationsAction = () => {
  * @param publication -> object capturated of any component
  * @returns 
  */
-export const createPublicationAction = ( publication: string ) => {
+export const createPublicationAction = ( publication: Publication ) => {
     
     return async ( dispatch: Dispatch ) => {
 
@@ -71,7 +72,7 @@ export const createPublicationAction = ( publication: string ) => {
  * @param publication -> new changes for publication
  * @returns 
  */
- export const updatePublicationAction = ( id: string, publication: string ) => {
+ export const updatePublicationAction = ( id: number, publication: Publication ) => {
     
     return async ( dispatch: Dispatch ) => {
 
@@ -96,7 +97,7 @@ export const createPublicationAction = ( publication: string ) => {
  * @param id -> of publication
  * @returns 
  */
- export const deletePublicationAction = ( id: string ) => {
+ export const deletePublicationAction = ( id: number ) => {
     
     return async ( dispatch: Dispatch ) => {
 
