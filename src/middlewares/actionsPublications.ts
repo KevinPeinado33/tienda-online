@@ -1,5 +1,4 @@
 import { Dispatch } from 'redux';
-import { Publication } from '../interfaces/publicationInterface';
 
 import { 
     downloadPublications,
@@ -15,6 +14,8 @@ import {
     deletePublicationError,
     deletePublicationSuccess
 } from '../stateManagement/actions/publicationAction';
+import { api } from '../config/axiosGlobal';
+import { Publication } from '../interfaces/publicationInterface';
 
 /**
  * Function for get data of API connected with
@@ -29,7 +30,11 @@ export const downloadPublicationsAction = () => {
 
         try {
 
-            dispatch( downloadPublicationsSuccess( [] ) );
+            const response = await api.get< Publication [] >('/publications');
+            
+            if ( response.status === 200 ) {
+                dispatch( downloadPublicationsSuccess( response.data ) );
+            }
 
         } catch ( error ) {
 
