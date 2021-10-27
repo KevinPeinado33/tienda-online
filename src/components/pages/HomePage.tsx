@@ -20,7 +20,7 @@ export const HomePage = () => {
 
     const { publications, loading } = useSelector( ( state: RootState ) => state.publication );
 
-    if ( isLoading && loading ) {
+    if ( isLoading || loading ) {
         return (
             <h1>Cargando ...</h1>
         )
