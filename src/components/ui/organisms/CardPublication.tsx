@@ -9,7 +9,7 @@ interface Props {
 
 export const CardPublication = ( { image, title, description, createAt }: Props ) => {
     return (
-        <Card>
+        <Card style={{ width: '18rem', marginRight: 20 }}>
             <Card.Img variant='top' src={ image } />
             <Card.Body>
                 <Card.Title>
@@ -18,9 +18,12 @@ export const CardPublication = ( { image, title, description, createAt }: Props 
                 <Card.Text>
                     { description }
                 </Card.Text>
+                <Card.Text>
+                    Fecha publicada: { createAt.substring(0,10) }
+                </Card.Text>
                 <Card.Footer>
                     <small className='text-muted'>
-                        { createAt }
+                        Publicado por: { createAt }
                     </small>
                 </Card.Footer>
             </Card.Body>

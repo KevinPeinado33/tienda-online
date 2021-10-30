@@ -18,8 +18,15 @@ export const useCategorys = (): CategoryState => {
     const getCategorys = async () => {
         const response = await api.get<Category[]>('/categorys');
 
+        const allCategory = { 
+            id: 0, 
+            title: 'Todos', 
+            createAt: `${new Date()}`, 
+            updateAt:`${new Date()}` 
+        };
+
         setState({
-            categorys: response.data,
+            categorys: [ allCategory, ...response.data ],
             isLoading: false
         });
     }
