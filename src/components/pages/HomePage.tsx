@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useCategorys } from '../../hooks/useCategorys';
 import { BadCategory } from '../ui/organisms/BadgeCategory';
 import { Loading } from '../ui/atoms/Loading';
+import { PublicationsSection } from '../template/PublicationsSection';
 
 import { RootState } from '../../stateManagement/store';
 import { 
     downloadPublicationsAction,
     downloadPublicationByCategoryAction 
 } from '../../middlewares/publicationAction';
-import { PublicationsSection } from '../template/PublicationsSection';
 
 export const HomePage = () => {
     
@@ -20,7 +20,7 @@ export const HomePage = () => {
     
     const { publications, loading } = useSelector( ( state: RootState ) => state.publication );
     
-    const [ categorySelected, setCategorySelected ] = useState< number >( 0 );
+    const [ categorySelected, setCategorySelected ] = useState( 0 );
 
     useEffect(() => {
 
