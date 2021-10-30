@@ -47,6 +47,32 @@ export const downloadPublicationsAction = () => {
 }
 
 /**
+ * Function for get all publications by category
+ * @param idCategory -> id of category to filter publications
+ * @returns 
+ */
+export const downloadPublicationByCategoryAction = ( idCategory: number ) => {
+    return async ( dispatch: Dispatch ) => {
+
+        dispatch( downloadPublications() );
+
+        try {
+
+            const response = await api.get< Publication [] >(`/publications/category/${idCategory}`);
+            
+            if ( response.status === 200 ) {
+                dispatch( downloadPublicationsSuccess( response.data ) );
+            }
+
+        } catch ( error ) {
+
+            dispatch( downloadPublicationsError( error ) );
+
+        }
+    }
+}
+
+/**
  * Function for create one object with consume API
  * @param publication -> object capturated of any component
  * @returns 

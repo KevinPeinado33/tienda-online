@@ -9,7 +9,9 @@ interface Props {
 
 export const CardPublication = ( { image, title, description, createAt }: Props ) => {
     return (
-        <Card style={{ width: '18rem', marginRight: 20 }}>
+        <Card 
+            className="mb-4"
+            style={{ width: '18rem' }}>
             <Card.Img variant='top' src={ image } />
             <Card.Body>
                 <Card.Title>

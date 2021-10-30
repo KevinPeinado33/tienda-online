@@ -1,33 +1,37 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CardGroup } from 'react-bootstrap';
 
-import { RootState } from '../../stateManagement/store';
-import { CardPublication } from '../ui/organisms/CardPublication';
-import { downloadPublicationsAction } from '../../middlewares/publicationAction';
 import { useCategorys } from '../../hooks/useCategorys';
 import { BadCategory } from '../ui/organisms/BadgeCategory';
+import { Loading } from '../ui/atoms/Loading';
+
+import { RootState } from '../../stateManagement/store';
+import { 
+    downloadPublicationsAction,
+    downloadPublicationByCategoryAction 
+} from '../../middlewares/publicationAction';
+import { PublicationsSection } from '../template/PublicationsSection';
 
 export const HomePage = () => {
-
+    
     const dispatch = useDispatch();
 
-    const { categorys, isLoading } = useCategorys();
-
-    useEffect(() => {
-        dispatch( downloadPublicationsAction() );
-        // eslint-disable-next-line
-    }, [ ]);
+    const { categorys, isLoading } = useCategorys();    
     
     const { publications, loading } = useSelector( ( state: RootState ) => state.publication );
     
     const [ categorySelected, setCategorySelected ] = useState< number >( 0 );
 
-    if ( isLoading || loading ) {
-        return (
-            <h5 className="mt-4 mb-4 text-center">Cargando ...</h5>
-        )
-    }
+    useEffect(() => {
+
+        if ( categorySelected !== 0 ) {
+            dispatch( downloadPublicationByCategoryAction( categorySelected ) );
+        } else {
+            dispatch( downloadPublicationsAction() );
+        }
+
+        // eslint-disable-next-line
+    }, [ categorySelected ]);
 
     return (
         <div className='mt-4'>
@@ -35,6 +39,7 @@ export const HomePage = () => {
             <div className="mt-4 mb-4">
                 <span className="mb-1">Categorias</span>
                 <br />
+                { ( isLoading ) && <Loading /> }
                 {
                     categorys.map(( category ) => (
                         <BadCategory
@@ -46,18 +51,13 @@ export const HomePage = () => {
                     ))
                 }
             </div>
-            <CardGroup>
-                {
-                    publications.map(( publication ) => (
-                        <CardPublication   
-                            key={ publication.id.toString() }                       
-                            image={ publication.image }
-                            title={ publication.title }
-                            description={ publication.description }
-                            createAt={ publication.createAt }/>
-                    ))
-                }
-            </CardGroup>
+            { ( loading ) &&  <Loading /> }
+            {
+                ( publications.length === 0 && !loading )
+                    ? <h5>No existe ninguna publicación !!</h5>
+                    : <PublicationsSection
+                        publications={ publications } />
+            }
         </div>
     )
 
