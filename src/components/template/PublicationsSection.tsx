@@ -15,12 +15,12 @@ export const PublicationsSection = ( { publications }: Props ) => {
                 publications.map(( publication ) => (
                     <Col 
                         md='auto' 
-                        key={ publication.id.toString() } >
+                        key={ publication.id?.toString() } >
                         <CardPublication 
-                            image={ publication.image }
+                            image={ publication.image! }
                             title={ publication.title }
                             description={ publication.description }
-                            createAt={ publication.createAt }/>
+                            createAt={ publication.createAt! } />
                     </Col>
                 ))
             }

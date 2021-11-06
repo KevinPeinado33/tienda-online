@@ -1,10 +1,11 @@
 export interface Publication {
-    id:          number;
+    id?:         number;
     title:       string;
     description: string;
-    image:       string;
+    image?:      string;
     price:       number;
     status:      boolean;
-    createAt:    string;
-    updateAt:    string;
+    categoryId?: number;
+    createAt?:   string;
+    updateAt?:   string;
 }

@@ -14,8 +14,10 @@ import {
     deletePublicationError,
     deletePublicationSuccess
 } from '../stateManagement/actions/publicationAction';
-import { api } from '../config/axiosGlobal';
+import { api, apiImg } from '../config/axiosGlobal';
 import { Publication } from '../interfaces/publicationInterface';
+import axios from 'axios';
+import { ImageResponse } from '../interfaces/imageInterface';
 
 /**
  * Function for get data of API connected with
@@ -75,9 +77,10 @@ export const downloadPublicationByCategoryAction = ( idCategory: number ) => {
 /**
  * Function for create one object with consume API
  * @param publication -> object capturated of any component
+ * @param image -> image in type of blob
  * @returns 
  */
-export const createPublicationAction = ( publication: Publication ) => {
+export const createPublicationAction = ( publication: Publication, image: string | Blob ) => {
     
     return async ( dispatch: Dispatch ) => {
 
@@ -85,7 +88,25 @@ export const createPublicationAction = ( publication: Publication ) => {
 
         try {
 
-            dispatch( createPublicationSuccess( publication ) );
+            const formData = new FormData();
+
+            formData.append('image', image);
+            
+            const responseImage = await apiImg.post< ImageResponse >('/upload', formData);
+
+            if ( 200 === responseImage.status ) {
+
+                publication.image      = responseImage.data.data.image.url;
+                publication.categoryId = +publication.categoryId!;
+                publication.price      = Number( publication.price );
+
+                const responsePublication = await api.post< Publication, any >('/publications', publication);
+
+                if ( 201 === responsePublication.status ) {
+                    dispatch( createPublicationSuccess( responsePublication.data ) );
+                }
+
+            }
 
         } catch ( error ) {
 
@@ -146,4 +167,29 @@ export const createPublicationAction = ( publication: Publication ) => {
 
     }
 
+}
+
+export const uploadImage = async ( image: string | Blob ) => {
+    
+    try {
+        console.log('llego hasta el metodo del middleware!');
+
+        const form = new FormData();
+        form.append('image', image);
+    
+        const response = await axios.post('https://api.imgbb.com/1/upload?key=709a76029db976ae987795f0c8abea8d', 
+        form,
+        {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        } 
+        );
+
+        console.log(response);
+
+    } catch (error) {
+        console.log(error);
+    }
+    
 }
