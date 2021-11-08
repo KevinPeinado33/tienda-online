@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import axios from 'axios';
 
 import { 
     downloadPublications,
@@ -16,8 +17,10 @@ import {
 } from '../stateManagement/actions/publicationAction';
 import { api, apiImg } from '../config/axiosGlobal';
 import { Publication } from '../interfaces/publicationInterface';
-import axios from 'axios';
 import { ImageResponse } from '../interfaces/imageInterface';
+
+const STATUS_OK        = 200;
+const STATUS_CREATE_OK = 201;
 
 /**
  * Function for get data of API connected with
@@ -34,7 +37,7 @@ export const downloadPublicationsAction = () => {
 
             const response = await api.get< Publication [] >('/publications');
             
-            if ( response.status === 200 ) {
+            if ( STATUS_OK === response.status ) {
                 dispatch( downloadPublicationsSuccess( response.data ) );
             }
 
@@ -62,7 +65,7 @@ export const downloadPublicationByCategoryAction = ( idCategory: number ) => {
 
             const response = await api.get< Publication [] >(`/publications/category/${idCategory}`);
             
-            if ( response.status === 200 ) {
+            if ( STATUS_OK === response.status ) {
                 dispatch( downloadPublicationsSuccess( response.data ) );
             }
 
@@ -94,7 +97,7 @@ export const createPublicationAction = ( publication: Publication, image: string
             
             const responseImage = await apiImg.post< ImageResponse >('/upload', formData);
 
-            if ( 200 === responseImage.status ) {
+            if ( STATUS_OK === responseImage.status ) {
 
                 publication.image      = responseImage.data.data.image.url;
                 publication.categoryId = +publication.categoryId!;
@@ -102,7 +105,7 @@ export const createPublicationAction = ( publication: Publication, image: string
 
                 const responsePublication = await api.post< Publication, any >('/publications', publication);
 
-                if ( 201 === responsePublication.status ) {
+                if ( STATUS_CREATE_OK === responsePublication.status ) {
                     dispatch( createPublicationSuccess( responsePublication.data ) );
                 }
 
