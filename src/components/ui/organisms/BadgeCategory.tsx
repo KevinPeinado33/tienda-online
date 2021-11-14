@@ -7,19 +7,16 @@ interface Props {
     setCategory: ( value: number ) => void;
 }
 
-export const BadCategory = ( { title, idCategory, isSelected, setCategory }: Props ) => {
-
-    return (
-        <Badge 
-            style={{ marginRight: 10, cursor: 'pointer' }}
-            onClick={ () => setCategory( idCategory ) } 
-            pill 
-            bg={
-                 ( isSelected === idCategory ) 
-                    ? 'secondary'
-                    : 'dark'
-            } >
-            { title }
-        </Badge>
-    )
-}
+export const BadCategory = ( { title, idCategory, isSelected, setCategory }: Props ) => (
+    <Badge 
+        style={{ marginRight: 10, cursor: 'pointer' }}
+        onClick={ () => setCategory( idCategory ) } 
+        pill 
+        bg={
+                ( isSelected === idCategory ) 
+                ? 'secondary'
+                : 'dark'
+        } >
+        { title }
+    </Badge>
+)
