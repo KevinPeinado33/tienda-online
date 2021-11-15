@@ -13,10 +13,10 @@ export const BadCategory = ( { title, idCategory, isSelected, setCategory }: Pro
         onClick={ () => setCategory( idCategory ) } 
         pill 
         bg={
-                ( isSelected === idCategory ) 
+            ( isSelected === idCategory ) 
                 ? 'secondary'
                 : 'dark'
         } >
-        { title }
+            { title }
     </Badge>
 )
