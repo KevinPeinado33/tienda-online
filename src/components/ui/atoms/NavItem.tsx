@@ -10,7 +10,7 @@ interface Props {
     disabled?: boolean;
 }
 
-export const NavItem = ( { path, name, disabled = false } : Props )  => {
+export const NavItem = ( { path, name, disabled = false } : Props ) => {
     return (
         <Nav.Item>
             <Nav.Link 
