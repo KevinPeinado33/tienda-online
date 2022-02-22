@@ -6,6 +6,7 @@ interface PublicationState {
     loading: boolean;
     error: string | null | any;
 }
+
 const initialState: PublicationState = {
     publications: [],
     loading: false,
